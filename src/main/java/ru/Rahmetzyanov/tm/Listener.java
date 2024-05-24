@@ -20,72 +20,71 @@ public class Listener {
         boolean running = true;
 
 
-        commands.put("helpMe", "выводит список всех команд");
+        commands.put("help", "выводит список всех команд");
         commands.put("exit", "выйти из программы");
 
-        commands.put("createTask", "создаёт задачу");
-        commands.put("deleteTask", "удаляет задачу");
-        commands.put("showTasks", "показывает все задачи");
-        commands.put("showOneTask", "показывает выбранную задачу");
-        commands.put("changeTask", "изменяет выбранную задачу");
+        commands.put("createT", "создаёт задачу");
+        commands.put("delT", "удаляет задачу");
+        commands.put("showT", "показывает все задачи");
+        commands.put("showOT", "показывает выбранную задачу");
+        commands.put("changeT", "изменяет выбранную задачу");
 
-        commands.put("createProject", "создаёт проект");
-        commands.put("deleteProject", "удаляет проект");
-        commands.put("showProjects", "показывает все проекты");
-        commands.put("showOneProject", "показывает выбранный проект");
-        commands.put("changeProject", "изменяет выбранный проект");
+        commands.put("createP", "создаёт проект");
+        commands.put("delP", "удаляет проект");
+        commands.put("showP", "показывает все проекты");
+        commands.put("showOP", "показывает выбранный проект");
+        commands.put("changeP", "изменяет выбранный проект");
+
         while (running) {
             System.out.println("Введите команду:");
             command = scanner.nextLine();
             switch (command) {
-                case ("helpMe"):
+                case ("help"):
                     commands.forEach((key, value) -> System.out.println(key + " - " + value));
                     break;
-                case ("createTask"):
+                case ("createT"):
                     System.out.println("Введите название задачи для создания:");
                     String itemName = scanner.nextLine();
                     task.create(itemName);
                     break;
-                case ("deleteTask"):
+                case ("delT"):
                     System.out.println("Введите название задачи для удаления:");
                     itemName = scanner.nextLine();
                     task.delete(itemName);
                     break;
-                case ("showTasks"):
-                    itemName = scanner.nextLine();
-                    task.showList(itemName);
+                case ("showT"):
+                    task.showList();
                     break;
-                case ("showOneTask"):
+                case ("showOT"):
                     System.out.println("Введите название задачи, которую хотите посмотреть:");
                     itemName = scanner.nextLine();
                     task.showOneElement(itemName);
                     break;
-                case ("changeTask"):
+                case ("changeT"):
                     System.out.println("Введите название задачи, котоорую хотите изменить:");
                     itemName = scanner.nextLine();
                     String newItemName = scanner.nextLine();
                     project.change(itemName, newItemName);
                     break;
-                case ("createProject"):
+                case ("createP"):
                     System.out.println("Введите название проекта для создания:");
                     itemName = scanner.nextLine();
                     project.create(itemName);
                     break;
-                case ("deleteProject"):
+                case ("delP"):
                     System.out.println("Введите название проекта для удаления:");
                     itemName = scanner.nextLine();
                     project.delete(itemName);
                     break;
-                case ("showProjects"):
-                    itemName = scanner.nextLine();
-                    project.showList(itemName);
+                case ("showP"):
+                    project.showList();
                     break;
-                case ("showOneProject"):
+                case ("showOP"):
                     System.out.println("Введите название проекта, который хотите посмотреть:");
                     itemName = scanner.nextLine();
                     project.showOneElement(itemName);
                     break;
-                case ("changeProject"):
+                case ("changeP"):
                     System.out.println("Введите название проекта, который хотите изменить:");
                     itemName = scanner.nextLine();
                     newItemName = scanner.nextLine();

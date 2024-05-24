@@ -15,9 +15,9 @@ abstract public class Creator {
         myList.remove(name);
     }
 
-    public void showList(String name) {
+    public void showList() {
         for (int i = 0; i < myList.size(); i++) {
-            System.out.println(i + ". " + myList.get(i));
+            System.out.println(i + 1 + ". " + myList.get(i));
         }
     }
 

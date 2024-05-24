@@ -12,8 +12,7 @@ public class Main {
         Listener listener = new Listener();
 
 
-        listener.commandListener
-                ();
+        listener.commandListener();
 
     }
 
