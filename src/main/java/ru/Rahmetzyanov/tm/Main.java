@@ -11,11 +11,9 @@ public class Main {
         Task task = new Task();
         Listener listener = new Listener();
 
-        Scanner scanner = new Scanner(System.in);
-        String command = scanner.next();
 
-
-        listener.commandListener(command);
+        listener.commandListener
+                ();
 
     }
 
