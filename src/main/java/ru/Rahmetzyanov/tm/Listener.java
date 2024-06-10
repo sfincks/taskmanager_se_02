@@ -1,24 +1,20 @@
 package ru.Rahmetzyanov.tm;
 
 import java.util.HashMap;
+import java.util.LinkedHashMap;
 import java.util.Map;
 import java.util.Scanner;
 
 public class Listener {
 
-    Scanner scanner = new Scanner(System.in);
+    private Scanner scanner = new Scanner(System.in);
 
-    Project project = new Project();
-    Task task = new Task();
+    private Project projectContainer = new Project();
+    private Task taskContainer = new Task();
 
-    Map<String, String> commands = new HashMap<>();
+    private Map<String, String> commands = new LinkedHashMap<>();
 
     public void commandListener() {
-
-        String command = "";
-        System.out.println(commands);
-        boolean running = true;
-
 
         commands.put("help", "выводит список всех команд");
         commands.put("exit", "выйти из программы");
@@ -35,9 +31,10 @@ public class Listener {
         commands.put("showOP", "показывает выбранный проект");
         commands.put("changeP", "изменяет выбранный проект");
 
+        boolean running = true;
         while (running) {
             System.out.println("Введите команду:");
-            command = scanner.nextLine();
+            String command = scanner.nextLine();
             switch (command) {
                 case ("help"):
                     commands.forEach((key, value) -> System.out.println(key + " - " + value));
@@ -45,50 +42,50 @@ public class Listener {
                 case ("createT"):
                     System.out.println("Введите название задачи для создания:");
                     String itemName = scanner.nextLine();
-                    task.create(itemName);
+                    taskContainer.create(itemName);
                     break;
                 case ("delT"):
                     System.out.println("Введите название задачи для удаления:");
                     itemName = scanner.nextLine();
-                    task.delete(itemName);
+                    taskContainer.delete(itemName);
                     break;
                 case ("showT"):
-                    task.showList();
+                    taskContainer.showList();
                     break;
                 case ("showOT"):
                     System.out.println("Введите название задачи, которую хотите посмотреть:");
                     itemName = scanner.nextLine();
-                    task.showOneElement(itemName);
+                    taskContainer.showOneElement(itemName);
                     break;
                 case ("changeT"):
                     System.out.println("Введите название задачи, котоорую хотите изменить:");
                     itemName = scanner.nextLine();
                     String newItemName = scanner.nextLine();
-                    project.change(itemName, newItemName);
+                    projectContainer.change(itemName, newItemName);
                     break;
                 case ("createP"):
                     System.out.println("Введите название проекта для создания:");
                     itemName = scanner.nextLine();
-                    project.create(itemName);
+                    projectContainer.create(itemName);
                     break;
                 case ("delP"):
                     System.out.println("Введите название проекта для удаления:");
                     itemName = scanner.nextLine();
-                    project.delete(itemName);
+                    projectContainer.delete(itemName);
                     break;
                 case ("showP"):
-                    project.showList();
+                    projectContainer.showList();
                     break;
                 case ("showOP"):
                     System.out.println("Введите название проекта, который хотите посмотреть:");
                     itemName = scanner.nextLine();
-                    project.showOneElement(itemName);
+                    projectContainer.showOneElement(itemName);
                     break;
                 case ("changeP"):
                     System.out.println("Введите название проекта, который хотите изменить:");
                     itemName = scanner.nextLine();
                     newItemName = scanner.nextLine();
-                    project.change(itemName, newItemName);
+                    projectContainer.change(itemName, newItemName);
                     break;
                 case ("exit"):
                     running = false;
@@ -96,5 +93,4 @@ public class Listener {
             }
         }
     }
-
 }

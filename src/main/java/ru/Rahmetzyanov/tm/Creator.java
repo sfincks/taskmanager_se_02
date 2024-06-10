@@ -16,8 +16,10 @@ abstract public class Creator {
     }
 
     public void showList() {
-        for (int i = 0; i < myList.size(); i++) {
-            System.out.println(i + 1 + ". " + myList.get(i));
+        int i = 1;
+        for (String item : myList) {
+            System.out.println(i + ". " + item);
+            i++;
         }
     }
 
@@ -27,7 +29,7 @@ abstract public class Creator {
                 System.out.println(i + 1 + ". " + myList.get(i));
         }
     }
-
+    //переписать change через stream API
     public void change(String name, String changeTo) {
         for (int i = 0; i < myList.size(); i++) {
             if (myList.get(i).equals(name)) {
@@ -35,5 +37,4 @@ abstract public class Creator {
             }
         }
     }
-
 }
