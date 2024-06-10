@@ -1,6 +1,17 @@
 package ru.Rahmetzyanov.tm;
 
+import java.util.Date;
+
 public class Project extends Creator{
+
+    private int ID;
+    public int getID() {
+        return ID;
+    }
+    private String name;
+    private String description;
+    private Date startDate;
+    private Date endDate;
 
 
     @Override

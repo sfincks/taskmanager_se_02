@@ -1,9 +1,11 @@
 package ru.Rahmetzyanov.tm;
 
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 abstract public class Creator {
+
 
     List<String> myList = new ArrayList<String>();
 
@@ -29,7 +31,7 @@ abstract public class Creator {
                 System.out.println(i + 1 + ". " + myList.get(i));
         }
     }
-    //переписать change через stream API
+
     public void change(String name, String changeTo) {
         for (int i = 0; i < myList.size(); i++) {
             if (myList.get(i).equals(name)) {

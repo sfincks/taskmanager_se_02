@@ -1,7 +1,17 @@
 package ru.Rahmetzyanov.tm;
 
+import java.util.Date;
+
 public class Task extends Creator{
 
+    Project proj = new Project();
+
+    private int ID;
+    private String name;
+    private String description;
+    private Date startDate;
+    private Date endDate;
+    private int projectID = proj.getID();
 
     @Override
     public void create(String name) {
