@@ -16,6 +16,8 @@ public interface Const {
     final String SHOW_ALL_PROJECTS = "ShowAP";
     final String SHOW_PROJECT = "ShowP";
     final String CHANGE_PROJECT = "ChngP";
+    final String ADD_TASK_TO_PROJECT = "AddTask";
+    final String SHOW_PROJECT_TASKS = "ShowPT";
 }
 
 

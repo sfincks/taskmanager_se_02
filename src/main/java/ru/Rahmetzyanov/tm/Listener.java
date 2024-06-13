@@ -30,6 +30,8 @@ public class Listener implements Const {
         commands.put(SHOW_ALL_PROJECTS, "показывает все проекты");
         commands.put(SHOW_PROJECT, "показывает выбранный проект");
         commands.put(CHANGE_PROJECT, "изменяет выбранный проект");
+        commands.put(ADD_TASK_TO_PROJECT, "добавляет задачу в проект");
+        commands.put(SHOW_PROJECT_TASKS, "показывает задачи в проекте");
 
         boolean running = true;
         while (running) {
@@ -39,9 +41,33 @@ public class Listener implements Const {
                 case (HELP):
                     commands.forEach((key, value) -> System.out.println(key + " - " + value));
                     break;
+                case (ADD_TASK_TO_PROJECT):
+                    System.out.println("Введите название проекта:");
+                    String itemName = scanner.nextLine();
+                    while (true) {
+                        System.out.println("Введите название задачи:");
+                        String projName = scanner.nextLine();
+                        if (itemName.equals(taskContainer.getName())) {
+                            projectContainer.addTaskToProj(itemName);
+                            break;
+                        } else {
+                            System.out.println("Задачи с таким названием не существует");
+                        }
+                    }
+                case (SHOW_PROJECT_TASKS):
+                    while (true) {
+                        System.out.println("Введите название проекта:");
+                        String projName = scanner.nextLine();
+                        if (projName.equals(projectContainer.getName())) {
+                            projectContainer.showProjTasks();
+                            break;
+                        } else {
+                            System.out.println("Проекта с таким названием не существует");
+                        }
+                    }
                 case (CREATE_TASK):
                     System.out.println("Введите название задачи для создания:");
-                    String itemName = scanner.nextLine();
+                    itemName = scanner.nextLine();
                     taskContainer.create(itemName);
                     break;
                 case (DELETE_TASK):
