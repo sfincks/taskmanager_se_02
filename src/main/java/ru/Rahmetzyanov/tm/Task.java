@@ -22,7 +22,8 @@ public class Task extends Creator {
     @Override
     public void create(String name) {
         int ID = this.ID;
-        this.name = name;
+
+        super.create(name);
         String description = this.description;
         Date startDate = this.startDate;
         Date endDate = this.endDate;

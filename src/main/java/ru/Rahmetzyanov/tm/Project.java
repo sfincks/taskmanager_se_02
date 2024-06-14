@@ -14,9 +14,10 @@ public class Project extends Creator {
     private Date startDate;
     private Date endDate;
     private List<String> projTasks = new LinkedList<String>();
+
     @Override
     public void create(String name) {
-        this.name = name;
+        super.create(name);
         int ID = this.ID;
         String description = this.description;
         Date startDate = this.startDate;
@@ -24,9 +25,15 @@ public class Project extends Creator {
         List<String> projTasks = this.projTasks;
     }
 
-    public String getName() {
-        return name;
+    public String getName(String name) {
+        for (String s : myList) {
+            if (s.equals(name)) {
+                return s;
+            }
+        }
+        return null;
     }
+
 
     @Override
     public void delete(String name) {
@@ -52,8 +59,12 @@ public class Project extends Creator {
         return ID;
     }
 
-    public void addTaskToProj(String task) {
-        projTasks.add(task);
+    public void addTaskToProj(String proj,String task) {
+        for (String s : myList) {
+            if (s.equals(proj)) {
+                projTasks.add(task);
+            }
+        }
     }
 
     public void showProjTasks () {

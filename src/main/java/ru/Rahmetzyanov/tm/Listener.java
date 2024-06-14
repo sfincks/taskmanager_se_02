@@ -43,27 +43,24 @@ public class Listener implements Const {
                     break;
                 case (ADD_TASK_TO_PROJECT):
                     System.out.println("Введите название проекта:");
+                    String projName = scanner.nextLine();
+                    if (!projName.equals(projectContainer.getName(projName))) {
+                        System.out.println("Проекта с таким названием не существует");
+                    }
+                    System.out.println("Введите название задачи:");
                     String itemName = scanner.nextLine();
-                    while (true) {
-                        System.out.println("Введите название задачи:");
-                        String projName = scanner.nextLine();
-                        if (itemName.equals(taskContainer.getName())) {
-                            projectContainer.addTaskToProj(itemName);
-                            break;
-                        } else {
-                            System.out.println("Задачи с таким названием не существует");
-                        }
+                    if (itemName.equals(taskContainer.getName())) {
+                        projectContainer.addTaskToProj(projName, itemName);
+                    } else {
+                        System.out.println("Задачи с таким названием не существует");
                     }
                 case (SHOW_PROJECT_TASKS):
-                    while (true) {
-                        System.out.println("Введите название проекта:");
-                        String projName = scanner.nextLine();
-                        if (projName.equals(projectContainer.getName())) {
-                            projectContainer.showProjTasks();
-                            break;
-                        } else {
-                            System.out.println("Проекта с таким названием не существует");
-                        }
+                    System.out.println("Введите название проекта:");
+                    projName = scanner.nextLine();
+                    if (projName.equals(projectContainer.getName(projName))) {
+                        projectContainer.showProjTasks();
+                    } else {
+                        System.out.println("Проекта с таким названием не существует");
                     }
                 case (CREATE_TASK):
                     System.out.println("Введите название задачи для создания:");
