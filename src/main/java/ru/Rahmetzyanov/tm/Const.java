@@ -5,7 +5,7 @@ public interface Const {
     final String HELP = "help";
     final String EXIT = "exit";
 
-    final String CREATE_TASK = "crtt";
+    //    final String CREATE_TASK = "crtt";
     final String DELETE_TASK = "delt";
     final String SHOW_ALL_TASKS = "showat";
     final String SHOW_TASK = "showt";

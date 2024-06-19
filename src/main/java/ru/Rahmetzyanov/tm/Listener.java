@@ -1,29 +1,27 @@
 package ru.Rahmetzyanov.tm;
 
-import java.util.HashMap;
-import java.util.LinkedHashMap;
-import java.util.Map;
-import java.util.Scanner;
+import java.sql.SQLOutput;
+import java.util.*;
 
 public class Listener implements Const {
+    private Storage storage;
 
-    private Scanner scanner = new Scanner(System.in);
+    private Scanner scanner;
 
-    private Project projectContainer = new Project();
-    private Task taskContainer = new Task();
+    private Map<String, String> commands;
 
-    private Map<String, String> commands = new LinkedHashMap<>();
-
-    public void commandListener() {
-
+    public Listener() {
+        this.storage = new Storage();
+        this.scanner = new Scanner(System.in);
+        this.commands = new LinkedHashMap<>();
+// CRUD операции для каждой таски/проджекта
+        //Create
+        //Show/show all
+        //Update
+        //Delete
+        //
         commands.put(HELP, "выводит список всех команд");
         commands.put(EXIT, "выйти из программы");
-
-        commands.put(CREATE_TASK, "создаёт задачу");
-        commands.put(DELETE_TASK, "удаляет задачу");
-        commands.put(SHOW_ALL_TASKS, "показывает все задачи");
-        commands.put(SHOW_TASK, "показывает выбранную задачу");
-        commands.put(CHANGE_TASK, "изменяет выбранную задачу");
 
         commands.put(CREATE_PROJECT, "создаёт проект");
         commands.put(DELETE_PROJECT, "удаляет проект");
@@ -33,6 +31,17 @@ public class Listener implements Const {
         commands.put(ADD_TASK_TO_PROJECT, "добавляет задачу в проект");
         commands.put(SHOW_PROJECT_TASKS, "показывает задачи в проекте");
 
+        commands.put(DELETE_TASK, "удаляет задачу");
+        commands.put(SHOW_ALL_TASKS, "показывает все задачи");
+        commands.put(SHOW_TASK, "показывает выбранную задачу");
+        commands.put(CHANGE_TASK, "изменяет выбранную задачу");
+    }
+//    private Object findProj(Storage storage){
+//        Optional<Project> findedProj = storage.projList.stream().filter(x -> x.getName().equals(storage)).findFirst();
+//        return findedProj;
+//    }
+
+    public void commandListener() {
         boolean running = true;
         while (running) {
             System.out.println("Введите команду:");
@@ -41,74 +50,150 @@ public class Listener implements Const {
                 case (HELP):
                     commands.forEach((key, value) -> System.out.println(key + " - " + value));
                     break;
-                case (ADD_TASK_TO_PROJECT):
-                    System.out.println("Введите название проекта:");
-                    String projName = scanner.nextLine();
-                    if (!projName.equals(projectContainer.getName(projName))) {
-                        System.out.println("Проекта с таким названием не существует");
-                    }
-                    System.out.println("Введите название задачи:");
-                    String itemName = scanner.nextLine();
-                    if (itemName.equals(taskContainer.getName())) {
-                        projectContainer.addTaskToProj(projName, itemName);
-                    } else {
-                        System.out.println("Задачи с таким названием не существует");
-                    }
-                case (SHOW_PROJECT_TASKS):
-                    System.out.println("Введите название проекта:");
-                    projName = scanner.nextLine();
-                    if (projName.equals(projectContainer.getName(projName))) {
-                        projectContainer.showProjTasks();
-                    } else {
-                        System.out.println("Проекта с таким названием не существует");
-                    }
-                case (CREATE_TASK):
-                    System.out.println("Введите название задачи для создания:");
-                    itemName = scanner.nextLine();
-                    taskContainer.create(itemName);
-                    break;
-                case (DELETE_TASK):
-                    System.out.println("Введите название задачи для удаления:");
-                    itemName = scanner.nextLine();
-                    taskContainer.delete(itemName);
-                    break;
-                case (SHOW_ALL_TASKS):
-                    taskContainer.showList();
-                    break;
-                case (SHOW_TASK):
-                    System.out.println("Введите название задачи, которую хотите посмотреть:");
-                    itemName = scanner.nextLine();
-                    taskContainer.showOneElement(itemName);
-                    break;
-                case (CHANGE_TASK):
-                    System.out.println("Введите название задачи, котоорую хотите изменить:");
-                    itemName = scanner.nextLine();
-                    String newItemName = scanner.nextLine();
-                    projectContainer.change(itemName, newItemName);
-                    break;
                 case (CREATE_PROJECT):
                     System.out.println("Введите название проекта для создания:");
-                    itemName = scanner.nextLine();
-                    projectContainer.create(itemName);
-                    break;
-                case (DELETE_PROJECT):
-                    System.out.println("Введите название проекта для удаления:");
-                    itemName = scanner.nextLine();
-                    projectContainer.delete(itemName);
-                    break;
-                case (SHOW_ALL_PROJECTS):
-                    projectContainer.showList();
+                    String projName = scanner.nextLine();
+                    for (Project project : storage.projList) {
+                        if (project.getName().equals(projName)) {
+                            System.out.println("Проект с таким названием уже существует");
+                            break;
+                        }
+                    }
+                    System.out.println("Введите описание проекта для создания:");
+                    String projDescription = scanner.nextLine();
+                    int projID = 0;
+                    Project proj = new Project(projID, projName, projDescription, new Date(), new Date());
+                    storage.projList.add(proj);
+                    projID++;
                     break;
                 case (SHOW_PROJECT):
                     System.out.println("Введите название проекта, который хотите посмотреть:");
-                    itemName = scanner.nextLine();
-                    projectContainer.showOneElement(itemName);
+                    projName = scanner.nextLine();
+                    Optional<Project> findedProj = storage.projList.stream().filter(x -> x.getName().equals(projName)).findFirst();
+                    if (findedProj.isEmpty()) {
+                        System.out.println("Проекта с таким названием не существует");
+                        break;
+                    } else {
+                        System.out.println(findedProj.get().getName());
+                    }
+                    break;
+                case (SHOW_ALL_PROJECTS):
+                    int i = 1;
+                    for (Project item : storage.projList) {
+                        System.out.println(i + ". " + item.getName());
+                        i++;
+                    }
                     break;
                 case (CHANGE_PROJECT):
                     System.out.println("Введите название проекта, который хотите изменить:");
+                    projName = scanner.nextLine();
+                    String newProjName = scanner.nextLine();
+                    Optional<Project> newFindedProj = storage.projList.stream().filter(x -> x.getName().equals(projName)).findFirst();
+                    if (newFindedProj.isEmpty()) {
+                        System.out.println("Проекта с таким названием не существует");
+                        break;
+                    } else {
+                        newFindedProj.get().setName(newProjName);
+                        System.out.println("Название проекта изменено с " + projName + " на " + newProjName);
+                    }
+                    break;
+                case (DELETE_PROJECT):
+                    System.out.println("Введите название проекта для удаления:");
+                    projName = scanner.nextLine();
+                    Optional<Project> deletedProj = storage.projList.stream().filter(x -> x.getName().equals(projName)).findFirst();
+                    if (deletedProj.isEmpty()) {
+                        System.out.println("Проекта с таким названием не существует");
+                        break;
+                    } else {
+                        storage.projList.remove(deletedProj.get());
+                        System.out.println("Проект под названием " + deletedProj);
+                    }
+                    break;
+                case (ADD_TASK_TO_PROJECT):
+                    System.out.println("Введите название проекта:");
+                    projName = scanner.nextLine();
+                    String finalProjName = projName;
+                    Optional<Project> optionalProject = storage.getProjList().stream()
+                            .filter(x -> x.getName().equals(finalProjName))
+                            .findFirst();
+                    if (optionalProject.isEmpty()) {
+                        System.out.println("Проекта с таким названием не существует");
+                        break;
+                    }
+                    Project findedProject = optionalProject.get();
+                    System.out.println("Введите название задачи:");
+                    String itemName = scanner.nextLine();
+                    System.out.println("Введите описание задачи:");
+                    String itemDescription = scanner.nextLine();
+                    int taskID = 0;
+                    Task task = new Task(taskID, itemName, itemDescription, new Date(), new Date(), findedProject.getID());
+                    taskID++;
+                    findedProject.getProjTasks().add(task);
+                    System.out.println("Задача " + itemName + " добавлена в проект " + findedProject);
+                case (SHOW_PROJECT_TASKS):
+                    System.out.println("Введите название проекта:");
+                    String prjctName = scanner.nextLine();
+                    Optional<Project> shownPoject = storage.getProjList().stream()
+                            .filter(x -> x.getName().equals(prjctName))
+                            .findFirst();
+                    if (shownPoject.isEmpty()) {
+                        System.out.println("Проекта с таким названием не существует");
+                        break;
+                    }
+                    int j = 1;
+                    for (Task item : shownPoject.get().projTasks) {
+                        System.out.println(j + ". " + item.getName());
+                        j++;
+                    }
+                case (DELETE_TASK):
+                    System.out.println("Введите название задачи для удаления:");
                     itemName = scanner.nextLine();
-                    newItemName = scanner.nextLine();
-                    projectContainer.change(itemName, newItemName);
+                    for (Project project : storage.projList) {
+                        for (Task task1 : project.projTasks) {
+                            if (task1.getName().equals(itemName)) {
+                                project.projTasks.remove(task1);
+                                break;
+                            }
+                        }
+                    }
+                    System.out.println("Задачи с таким названием не существует");
+                    break;
+                case (SHOW_ALL_TASKS):
+                    for (Project project : storage.projList) {
+                        System.out.println("Проект" + project + " Задачи:");
+                        for (Task task1 : project.projTasks) {
+                            System.out.println(task1);
+                        }
+                    }
+                    break;
+                case (SHOW_TASK):
+                    System.out.println("Введите название задачи:");
+                    itemName = scanner.nextLine();
+                    for (Project project : storage.projList) {
+                        System.out.println("Проект" + project + " Задачи:");
+                        for (Task task1 : project.projTasks) {
+                            if (task1.getName().equals(itemName)) {
+                                System.out.println(task1);
+                                break;
+                            }
+                        }
+                    }
+                    System.out.println("Задачи с таким названием не существует");
+                    break;
+                case (CHANGE_TASK):
+                    System.out.println("Введите название задачи для изменения:");
+                    itemName = scanner.nextLine();
+                    System.out.println("Введите новое название задачи:");
+                    String newItemName = scanner.nextLine();
+                    for (Project project : storage.projList) {
+                        for (Task task1 : project.projTasks) {
+                            if (task1.getName().equals(itemName)) {
+                                task1.setName(newItemName);
+                                break;
+                            }
+                        }
+                    }
+                    System.out.println("Задачи с таким названием не существует");
                     break;
                 case (EXIT):
                     running = false;
