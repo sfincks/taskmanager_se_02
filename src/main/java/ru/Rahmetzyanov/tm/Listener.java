@@ -74,19 +74,20 @@ public class Listener implements Const {
                         System.out.println("Проекта с таким названием не существует");
                         break;
                     } else {
-                        System.out.println(findedProj.get().getName());
+                        System.out.println("Проект: " + findedProj.get().getName() + " Описание: " + findedProj.get().getDescription());
                     }
                     break;
                 case (SHOW_ALL_PROJECTS):
                     int i = 1;
                     for (Project item : storage.projList) {
-                        System.out.println(i + ". " + item.getName());
+                        System.out.println(i + ". " + item.getName() + " Описание: " + item.getDescription());
                         i++;
                     }
                     break;
                 case (CHANGE_PROJECT):
                     System.out.println("Введите название проекта, который хотите изменить:");
                     projName = scanner.nextLine();
+                    System.out.println("Введите новое название проекта:");
                     String newProjName = scanner.nextLine();
                     Optional<Project> newFindedProj = storage.projList.stream().filter(x -> x.getName().equals(projName)).findFirst();
                     if (newFindedProj.isEmpty()) {
@@ -106,7 +107,7 @@ public class Listener implements Const {
                         break;
                     } else {
                         storage.projList.remove(deletedProj.get());
-                        System.out.println("Проект под названием " + deletedProj);
+                        System.out.println("Проект под названием " + projName + " был удалён");
                     }
                     break;
                 case (ADD_TASK_TO_PROJECT):
@@ -129,7 +130,8 @@ public class Listener implements Const {
                     Task task = new Task(taskID, itemName, itemDescription, new Date(), new Date(), findedProject.getID());
                     taskID++;
                     findedProject.getProjTasks().add(task);
-                    System.out.println("Задача " + itemName + " добавлена в проект " + findedProject);
+                    System.out.println("Задача " + itemName + " добавлена в проект " + findedProject.getName());
+                    break;
                 case (SHOW_PROJECT_TASKS):
                     System.out.println("Введите название проекта:");
                     String prjctName = scanner.nextLine();
@@ -142,9 +144,10 @@ public class Listener implements Const {
                     }
                     int j = 1;
                     for (Task item : shownPoject.get().projTasks) {
-                        System.out.println(j + ". " + item.getName());
+                        System.out.println(j + ". " + item.getName() + " Описание: " + item.getDescription());
                         j++;
                     }
+                    break;
                 case (DELETE_TASK):
                     System.out.println("Введите название задачи для удаления:");
                     itemName = scanner.nextLine();
@@ -160,9 +163,13 @@ public class Listener implements Const {
                     break;
                 case (SHOW_ALL_TASKS):
                     for (Project project : storage.projList) {
-                        System.out.println("Проект" + project + " Задачи:");
+                        System.out.println("Проект " + project.getName() + " Задачи:");
                         for (Task task1 : project.projTasks) {
-                            System.out.println(task1);
+                            if (project.projTasks.isEmpty()){
+                                System.out.println("Нет задач");
+                            }else {
+                                System.out.println(task1.getName() + " Описание: " + task1.getDescription());
+                            }
                         }
                     }
                     break;
@@ -170,10 +177,9 @@ public class Listener implements Const {
                     System.out.println("Введите название задачи:");
                     itemName = scanner.nextLine();
                     for (Project project : storage.projList) {
-                        System.out.println("Проект" + project + " Задачи:");
                         for (Task task1 : project.projTasks) {
                             if (task1.getName().equals(itemName)) {
-                                System.out.println(task1);
+                                System.out.println("Проект: "+ project.getName()+ " Задача: " + task1.getName() + " Описание: " + task1.getDescription());
                                 break;
                             }
                         }
@@ -195,6 +201,10 @@ public class Listener implements Const {
                     }
                     System.out.println("Задачи с таким названием не существует");
                     break;
+                    /**
+                     нужен хелп с CHANGE_TASK
+                     в конце цикла выводит сообщение
+                    */
                 case (EXIT):
                     running = false;
                     break;
